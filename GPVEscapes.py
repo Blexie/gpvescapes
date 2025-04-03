@@ -26,7 +26,7 @@ for driver in qualiroot.iter('Driver'):
     for lap in driver.findall('Lap'):
         if lap.get('twrr') == '1.000' and lap.get('pit') != '1' and lap.get('num') != driver.find('Laps').text:
             for nextlap in driver.findall('Lap'):
-                if int(nextlap.get('num')) == int(lap.get('num')) + 1:
+                if int(nextlap.get('num')) == int(lap.get('num')) + 1 and nextlap.get('et') != '--.---':
                     # print(nextlap.get('et'))
                     timestamp = str(datetime.timedelta(seconds=round(float(nextlap.get('et')))))
                     # print(timestamp)
