@@ -24,15 +24,11 @@ qualiroot = getqualifile()
 for driver in qualiroot.iter('Driver'):
     name = driver.find('Name')
     for lap in driver.findall('Lap'):
-        if lap.get('twrr') == '1.000' and lap.get('pit') != '1' and lap.get('num') != driver.find('Laps').text:
+        if lap.get('twrr') == '1.000' and lap.get('pit') != '1' and lap.get('num') != driver.find('Laps').text and lap.get('et') != "--.---":
             for nextlap in driver.findall('Lap'):
                 if int(nextlap.get('num')) == int(lap.get('num')) + 1:
-                    # print(nextlap.get('et'))
                     timestamp = str(datetime.timedelta(seconds=round(float(nextlap.get('et')))))
-                    # print(timestamp)
                     break
-            # print(lap.get('num'))
-            # print(name.text)
             ctypes.windll.user32.MessageBoxW(0, name.text + ": Possible escape lap " + lap.get('num')
                                              + " (Approx: "+ timestamp + ")" + '\n' + "Please verify on the replay."
                                              , "Suspicious Lap")
